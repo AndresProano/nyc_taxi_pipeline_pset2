@@ -64,7 +64,7 @@ def load_data_from_api(*args, **kwargs):
                         if tabla_exist:
                             query_delete = f"""
                             DELETE FROM {schema_name}.{table_name}
-                            WHERE source_month = '{years}-{months}' 
+                            WHERE source_month = '{year}-{month}' 
                             AND service_type = '{service}';
                             """
                             loader.execute(query_delete)
@@ -82,7 +82,7 @@ def load_data_from_api(*args, **kwargs):
                             chunksize=10000,
                             allow_reserved_words=True
                         )
-                        print(f"   ✅ Éxito: Insertadas {len(df)} filas.")
+                        print(f"Éxito: Insertadas {len(df)} filas.")
                         
                     except requests.exceptions.HTTPError:
                         print(f"Archivo no encontrado: {url} (Probablemente mes futuro)")

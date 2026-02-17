@@ -4,12 +4,12 @@ taxi_transform:
   outputs:
     dev:
       type: postgres
-      host: "{{ env_var('POSTGRES_HOST') }}"
+      host: postgres
       user: "{{ env_var('POSTGRES_USER') }}"
       password: "{{ env_var('POSTGRES_PASSWORD') }}"
       port: 5432
       dbname: "{{ env_var('POSTGRES_DB') }}"
-      threads: 2
+      threads: 4
       schema: analytics
 
   target: dev

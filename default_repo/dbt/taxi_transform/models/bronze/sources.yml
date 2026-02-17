@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: nyc_taxi
+    schema: bronze
+    tables:
+      - name: raw_trips
+      - name: taxi_zones

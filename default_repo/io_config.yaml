@@ -87,7 +87,7 @@ default:
   POSTGRES_SCHEMA: public # Optional
   POSTGRES_USER: "{{ env_var('POSTGRES_USER') }}"
   POSTGRES_PASSWORD: "{{ env_var('POSTGRES_PASSWORD') }}"
-  POSTGRES_HOST: "{{ env_var('POSTGRES_HOST') }}"
+  POSTGRES_HOST: postgres
   POSTGRES_PORT: 5432
   # Qdrant
   QDRANT_COLLECTION: collection

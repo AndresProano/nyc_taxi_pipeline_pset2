@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  # 1. Tabla de Hechos
+  - name: fct_trips
+    description: "Tabla particionada de viajes unificados"
+    columns:
+      - name: trip_id
+        tests:
+          - unique
+          - not_null
+
+      - name: pickup_zone_key
+        tests:
+          - relationships:
+              to: ref('dim_zone')
+              field: zone_key
+
+      - name: dropoff_zone_key
+        tests:
+          - relationships:
+              to: ref('dim_zone')
+              field: zone_key
+
+      - name: service_type
+        tests:
+          - accepted_values:
+              values: ['yellow', 'green']
+
+  # 2. Dimensión Zonas
+  - name: dim_zone
+    columns:
+      - name: zone_key
+        tests:
+          - unique
+          - not_null
+
+  # 3. Dimensión Tipo de Servicio
+  - name: dim_service_type
+    columns:
+      - name: service_type
+        tests:
+          - unique
+          - not_null
+          - accepted_values:
+              values: ['yellow', 'green']
+
+  # 4. Dimensión Tipo de Pago
+  - name: dim_payment_type
+    columns:
+      - name: payment_type_group
+        tests:
+          - accepted_values:
+              values: ['card', 'cash', 'other']
