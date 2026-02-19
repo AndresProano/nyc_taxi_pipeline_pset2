@@ -134,7 +134,8 @@ blocks:
     file_source:
       path: dbt/taxi_transform/models/gold/dim_payment_type.sql
       project_path: dbt/taxi_transform
-  downstream_blocks: []
+  downstream_blocks:
+  - ingest_bronze
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -147,6 +148,22 @@ blocks:
   upstream_blocks:
   - dbt/taxi_transform/models/silver/silver_taxi_trips
   uuid: dbt/taxi_transform/models/gold/dim_payment_type
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: ingest_bronze
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - dbt/taxi_transform/models/gold/dim_payment_type
+  uuid: ingest_bronze
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

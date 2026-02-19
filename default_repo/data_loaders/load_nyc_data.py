@@ -47,7 +47,7 @@ def load_data_smart(*args, **kwargs):
                 try:
                     response = requests.get(url, timeout=60)
                     if response.status_code == 404:
-                        print(f"⚠️ Salteando {file_name} (No existe)")
+                        print(f"Salteando {file_name} (No existe)")
                         continue
                     
                     df = pd.read_parquet(io.BytesIO(response.content))
