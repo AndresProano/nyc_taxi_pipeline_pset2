@@ -10,6 +10,7 @@ blocks:
     limit: 1000
   downstream_blocks:
   - dbt/taxi_transform/models/gold/fct_trips
+  - dbt/taxi_transform/models/gold/dim_payment_type
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -59,12 +60,12 @@ blocks:
   language: sql
   name: dbt/taxi_transform/models/silver/silver_taxi_zones
   retry_config: null
-  status: not_executed
+  status: executed
   timeout: null
   type: dbt
   upstream_blocks: []
   uuid: dbt/taxi_transform/models/silver/silver_taxi_zones
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     dbt_project_name: dbt/taxi_transform
@@ -108,6 +109,44 @@ blocks:
   upstream_blocks:
   - dbt/taxi_transform/models/silver/silver_taxi_trips
   uuid: dbt/taxi_transform/models/gold/fct_trips
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_nyc_data.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_nyc_data
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_nyc_data
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dbt_project_name: dbt/taxi_transform
+    file_path: dbt/taxi_transform/models/gold/dim_payment_type.sql
+    file_source:
+      path: dbt/taxi_transform/models/gold/dim_payment_type.sql
+      project_path: dbt/taxi_transform
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: dim_payment_type
+  retry_config: null
+  status: executed
+  timeout: null
+  type: dbt
+  upstream_blocks:
+  - dbt/taxi_transform/models/silver/silver_taxi_trips
+  uuid: dbt/taxi_transform/models/gold/dim_payment_type
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

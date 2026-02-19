@@ -1,0 +1,12 @@
+taxi_transform:
+  outputs:
+    dev:
+      dbname: postgresdb
+      host: postgres
+      password: postgrespassword
+      port: 5432
+      schema: analytics
+      threads: 4
+      type: postgres
+      user: postgres
+  target: dev
