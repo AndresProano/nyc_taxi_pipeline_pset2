@@ -1,8 +1,6 @@
 # ny_taxi_project - Analisis de Movilidad NYC
 Autor: Andres Proano
 
-Este README esta organizado en el orden requerido para la revision y contiene evidencias con imagenes desplegables. Haz clic en cada resumen para mostrar u ocultar la imagen.
-
 ## 1. Arquitectura (Bronze/Silver/Gold) + diagrama textual
 El proyecto utiliza una arquitectura de datos en capas (Bronze, Silver, Gold) para garantizar la trazabilidad y calidad de la informacion.
 
@@ -15,7 +13,16 @@ Datos procesados correspondientes del ano 2022 al ano 2025 para ambos servicios:
 - Servicio Yellow: Enero a Diciembre 2024 (Completo).
 - Servicio Green: Enero a Diciembre 2024 (Completo).
 
-Resumen de tablas donde se observa todo el ano 2024 cargado y fechas faltantes:
+Se presenta un resumen de ejemplo de cómo se visualizan las tablas:
+
+| year_month | service_type | status | row_count |
+| :---: | :---: | :---: | :---: |
+| 2025-12 | yellow | missing | 0 |
+| 2025-12 | green | missing | 0 |
+| 2024-12 | yellow | loaded | 3668371 |
+| 2024-12 | green | loaded | 53994 |
+
+Resumen de tablas donde se observa todo el año 2024 cargado y fechas faltantes:
 
 <details>
 	<summary>Ver tabla de cobertura 1</summary>
@@ -65,8 +72,8 @@ Log de ejecucion exitoso con meses finales de 2024:
 </details>
 
 ## 5. Triggers y que disparan
-- ingest_monthly (Schedule): Ejecuta la ingesta de datos con frecuencia mensual para capturar los nuevos reportes de taxi.
-- dbt_after_ingest (API/Event): Dispara la logica de transformacion dbt (build_silver, build_gold y quality_checks) inmediatamente despues de que la ingesta Bronze termina exitosamente.
+- ingest_monthly (Schedule): Ejecuta la ingesta de datos con frecuencia diaria para capturar los nuevos reportes de taxi.
+- dbt_after_ingest (API/Event): Dispara la logica de transformacion dbt (en el orden build_silver, build_gold y quality_checks) inmediatamente despues de que la ingesta Bronze termina exitosamente.
 
 Evidencias de triggers utilizados:
 
@@ -157,7 +164,7 @@ Logs de ejecucion:
 	<img src="evidencias/8.2prooftest.png" alt="Log dbt test" />
 </details>
 
-## 9. Troubleshooting (minimo 3 problemas comunes y solucion)
+## 9. Troubleshooting 
 - Outliers en Propinas: Se detectaron propinas superiores al 500% en zonas como Newark. Solucion: Filtrar registros con fare_amount > 5.0 y rate_code = 1 en la capa Silver.
 - Velocidades Imposibles: Registros con velocidades de 2000+ MPH. Solucion: Aplicar filtros de calidad en dbt para excluir viajes con duraciones de 0 segundos.
 - Memoria en Docker: Archivos Parquet pesados saturan el contenedor. Solucion: Implementar lectura por chunks en el Data Loader de Mage.
